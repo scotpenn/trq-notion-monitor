@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+.pytest_cache/
+
+# Env & secrets - 绝不 commit
+.env
+config.json
+secrets.json
+*.secret
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# macOS
+.DS_Store
+
+# Logs (保留 data/ 和 notes/ 的日快照，不忽略)
+*.log
