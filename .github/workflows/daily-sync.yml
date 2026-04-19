@@ -33,13 +33,13 @@ jobs:
           NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_DATA_SOURCE_ID }}
         run: python sync_to_notion.py
 
-      - name: Commit today's CSV snapshots back to repo
+      - name: Commit today's snapshots + web data back to repo
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/*.csv
+          git add data/*.csv docs/data.json
           if git diff --staged --quiet; then
-            echo "ℹ️  No new snapshot files today"
+            echo "ℹ️  No new files today"
           else
             git commit -m "Daily snapshot: $(date -u +%Y-%m-%d)"
             git push

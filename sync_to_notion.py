@@ -24,8 +24,10 @@ from datetime import datetime
 BASE_DIR = Path(__file__).resolve().parent
 DATA_DIR = BASE_DIR / "data"
 NOTES_DIR = BASE_DIR / "notes"
+DOCS_DIR = BASE_DIR / "docs"       # GitHub Pages 静态站点目录
 DATA_DIR.mkdir(exist_ok=True)
 NOTES_DIR.mkdir(exist_ok=True)
+DOCS_DIR.mkdir(exist_ok=True)
 
 TODAY = datetime.now().strftime("%Y-%m-%d")
 CURRENT_QUARTER = "Q4"  # 2026-03-26 至 2026-06-27；6/27 之后要改成 "Q1"
@@ -40,14 +42,13 @@ SOURCES = {
 NOTION_API_URL = "https://api.notion.com/v1/pages"
 NOTION_API_VERSION = "2025-09-03"
 
-# 产品类别 → Product Tag 映射（只给这 6 类打 tag，其余会被 dashboard 过滤掉）
+# 产品类别 → Product Tag 映射
+# 只保留真正有 TRQ quota 且和我们业务相关的品类。
+# 其他 STRUT / SUPPORT 类（7216.91、7308.90 等）走 derivative 25% surtax 清单，
+# 不占 TRQ 配额，不在这个 monitor 的跟踪范围里。
 TAG_MAP = {
     "Standard Pipe":              ["EMT", "RIGID"],
     "Line Pipe":                  ["RIGID"],
-    "Structural Steel":           ["STRUT"],
-    "Hollow Structural Sections": ["STRUT"],
-    "Cold Finished Bars":         ["SUPPORT"],
-    "Cold-Rolled Sheet":          ["SUPPORT"],
 }
 
 
@@ -274,7 +275,8 @@ def get_product_tags(category_name: str) -> list:
     """
     查询一个产品类别要挂哪些焦点 tag（EMT/RIGID/STRUT/SUPPORT）。
 
-    只有 TAG_MAP 里登记的 6 个类别会返回非空列表，其他 17 类返回 []。
+    只有 TAG_MAP 里登记的 2 个 pipe/tube 类别会返回非空列表，其他 21 类返回 []。
+    （STRUT/SUPPORT 类走 derivative 25% surtax，不占 TRQ 配额，不纳入跟踪）
     Notion 那边可以用 "Product Tag is not empty" 过滤出焦点看板。
 
     Args:
@@ -348,7 +350,7 @@ def build_notion_page(row: dict, data_source_id: str) -> dict:
         "Source URL":          {"url": source_url},
     }
 
-    # Product Tag 只有焦点 6 类才有；非焦点不加这个字段，Notion 里就显示为空
+    # Product Tag 只有焦点 2 类（Standard Pipe / Line Pipe）才有；非焦点不加这个字段，Notion 里就显示为空
     if tags:
         properties["Product Tag"] = {
             "multi_select": [{"name": t} for t in tags]
@@ -480,6 +482,90 @@ def _post_one(payload: dict, token: str, max_retries: int = 3) -> dict:
     raise RuntimeError(f"重试 {max_retries} 次后仍失败")
 
 
+# ======== 函数 7.5：生成 Web 页面数据 ========
+
+def write_web_data(all_rows: list) -> Path:
+    """
+    把 46 条 rows 汇总成焦点类别（Standard Pipe / Line Pipe）的结构化 JSON，写到 docs/data.json。
+    GitHub Pages 的 index.html 会 fetch 这个文件来渲染。
+
+    输出结构：
+    {
+      "generated_at": "2026-04-18",
+      "quarter":      "Q4",
+      "focus_categories": [
+        {
+          "name":        "Standard Pipe",
+          "category_id": 20,
+          "tags":        ["EMT", "RIGID"],
+          "non_fta":     {utilization_pct, max_quota_kg, utilized_kg, remaining_kg, status},
+          "fta":         {...同上},
+        },
+        ...6 条
+      ],
+      "source_urls": {"nfta": "...", "fta": "..."}
+    }
+
+    Args:
+        all_rows: parse_trq_csv × 2 合并后的 46 条记录
+
+    Returns:
+        Path: 写入的 docs/data.json 路径
+    """
+    # 把 rows 按 (category_name, country_group) 做成字典，方便查
+    by_key = {(r["category_name"], r["country_group"]): r for r in all_rows}
+
+    focus_list = []
+    for cat_name, tags in TAG_MAP.items():
+        nfta = by_key.get((cat_name, "Non-FTA"))
+        fta  = by_key.get((cat_name, "FTA"))
+        if not nfta or not fta:
+            continue  # 某些类别可能在某个 CSV 里不存在，跳过
+
+        def snap(r: dict) -> dict:
+            """从一条 row 挤出卡片要用的字段 + 计算 status"""
+            return {
+                "utilization_pct":       r["utilization_pct"],
+                "max_quota_kg":          r["max_quota_kg"],
+                "utilized_kg":           r["utilized_kg"],
+                "remaining_kg":          r["remaining_kg"],
+                "max_country_share_pct": r["max_country_share_pct"],
+                "status":                compute_status(r["utilization_pct"]),
+            }
+
+        focus_list.append({
+            "name":        cat_name,
+            "category_id": nfta["category_id"],
+            "tags":        tags,
+            "non_fta":     snap(nfta),
+            "fta":         snap(fta),
+        })
+
+    # 按最紧张的那个利用率排序：越满的越靠前
+    focus_list.sort(
+        key=lambda c: max(c["non_fta"]["utilization_pct"], c["fta"]["utilization_pct"]),
+        reverse=True,
+    )
+
+    payload = {
+        "generated_at":     TODAY,
+        "quarter":          CURRENT_QUARTER,
+        "quarter_window":   "2026-03-26 to 2026-06-27",   # Q4 窗口，切季度时要改
+        "focus_categories": focus_list,
+        "source_urls": {
+            "nfta": SOURCES["NFTA-Q4"],
+            "fta":  SOURCES["FTA-Q4"],
+        },
+        "notion_url": "https://www.notion.so/1aa5afdbe36a415fa32e9bf155625ca9",
+    }
+
+    out_path = DOCS_DIR / "data.json"
+    with out_path.open("w", encoding="utf-8") as f:
+        json.dump(payload, f, indent=2, ensure_ascii=False)
+    print(f"[web] ✅ 写入 {out_path} ({len(focus_list)} 个焦点类别)")
+    return out_path
+
+
 # ======== 函数 8：主工作流（生产环境用） ========
 
 def main(dry_run: bool = False) -> int:
@@ -514,6 +600,9 @@ def main(dry_run: bool = False) -> int:
         for r in all_rows
     ]
     print(f"\n📦 共组装 {len(payloads)} 条 payload")
+
+    # --- 3.5. 生成 Web 页面数据（给 GitHub Pages 的 index.html 用）---
+    write_web_data(all_rows)
 
     # --- 4. 推送 ---
     stats = push_to_notion(payloads, cfg["notion_token"], dry_run=dry_run)
@@ -572,9 +661,9 @@ def run_tests():
     else:
         print("  ⚠️  没找到 Standard Pipe (Non-FTA) 样本，检查解析")
 
-    # 抽查：EMT/RIGID/STRUT/SUPPORT 焦点的 6 类
+    # 抽查：EMT/RIGID 焦点类别
     focus_names = list(TAG_MAP.keys())
-    print(f"\n  🎯 焦点 6 类在两份 CSV 中的记录：")
+    print(f"\n  🎯 焦点 {len(focus_names)} 类在两份 CSV 中的记录：")
     for r in all_rows:
         if r["category_name"] in focus_names:
             print(
@@ -606,8 +695,8 @@ def run_tests():
         ok  = "✅" if got == expected else "❌"
         print(f"    {ok} {pct:>6.1f}% → {got:10s} (期望 {expected})")
 
-    # 跑一遍真实 46 行，看贴标签效果 —— 只打印焦点 6 类
-    print("\n  🎯 焦点 6 类贴标签预览：")
+    # 跑一遍真实 46 行，看贴标签效果 —— 只打印焦点类别
+    print(f"\n  🎯 焦点 {len(TAG_MAP)} 类贴标签预览：")
     print(f"    {'Group':8s} {'Category':30s} {'Util':>7s}  {'Status':10s} {'Tags'}")
     print(f"    {'-'*8} {'-'*30} {'-'*7}  {'-'*10} {'-'*20}")
     for r in all_rows:

@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-04-18",
+  "quarter": "Q4",
+  "quarter_window": "2026-03-26 to 2026-06-27",
+  "focus_categories": [
+    {
+      "name": "Standard Pipe",
+      "category_id": 20,
+      "tags": [
+        "EMT",
+        "RIGID"
+      ],
+      "non_fta": {
+        "utilization_pct": 100.0,
+        "max_quota_kg": 10369200,
+        "utilized_kg": 10369200,
+        "remaining_kg": 0,
+        "max_country_share_pct": 21.0,
+        "status": "Used Up"
+      },
+      "fta": {
+        "utilization_pct": 100.0,
+        "max_quota_kg": 13489500,
+        "utilized_kg": 13489500,
+        "remaining_kg": 0,
+        "max_country_share_pct": 58.0,
+        "status": "Used Up"
+      }
+    },
+    {
+      "name": "Line Pipe",
+      "category_id": 18,
+      "tags": [
+        "RIGID"
+      ],
+      "non_fta": {
+        "utilization_pct": 74.25,
+        "max_quota_kg": 2472000,
+        "utilized_kg": 1835407,
+        "remaining_kg": 636593,
+        "max_country_share_pct": 59.0,
+        "status": "Warning"
+      },
+      "fta": {
+        "utilization_pct": 100.0,
+        "max_quota_kg": 6248600,
+        "utilized_kg": 6248600,
+        "remaining_kg": 0,
+        "max_country_share_pct": 45.0,
+        "status": "Used Up"
+      }
+    }
+  ],
+  "source_urls": {
+    "nfta": "https://www.eics-scei.gc.ca/report-rapport/TRQ_NFTA-Q4.csv",
+    "fta": "https://www.eics-scei.gc.ca/report-rapport/TRQ_FTA-Q4.csv"
+  },
+  "notion_url": "https://www.notion.so/1aa5afdbe36a415fa32e9bf155625ca9"
+}

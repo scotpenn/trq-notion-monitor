@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <title>TRQ Quota Monitor · Canadian Steel</title>
+  <meta name="description" content="Real-time utilization of Canadian Steel Tariff Rate Quotas for focus product categories." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ====================================================================
+       THEME TOKENS — auto light/dark via prefers-color-scheme
+       ==================================================================== */
+    :root {
+      /* Dark (default) */
+      --bg-0: #0a0b0f;
+      --bg-1: #12141b;
+      --bg-2: #1a1d27;
+      --surface: #15171f;
+      --line: #242733;
+      --line-2: #2f3342;
+      --text-0: #f5f6fa;
+      --text-1: #a9adbf;
+      --text-2: #6b7086;
+      --text-3: #454a5d;
+      --accent: #e8ece5;
+      --serif-color: #f5f6fa;
+
+      --ok:       #4ade80;
+      --warn:     #fbbf24;
+      --critical: #fb923c;
+      --danger:   #f87171;
+
+      --ok-soft:       rgba(74, 222, 128, 0.12);
+      --warn-soft:     rgba(251, 191, 36, 0.12);
+      --critical-soft: rgba(251, 146, 60, 0.12);
+      --danger-soft:   rgba(248, 113, 113, 0.14);
+
+      --grid-line: rgba(255, 255, 255, 0.03);
+    }
+
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-0: #faf9f5;
+        --bg-1: #ffffff;
+        --bg-2: #f1efe8;
+        --surface: #ffffff;
+        --line: #e6e3d8;
+        --line-2: #d2cebe;
+        --text-0: #18181b;
+        --text-1: #52525b;
+        --text-2: #a1a1aa;
+        --text-3: #d4d4d8;
+        --accent: #1a1a1a;
+        --serif-color: #1a1a1a;
+
+        --ok:       #059669;
+        --warn:     #b45309;
+        --critical: #c2410c;
+        --danger:   #b91c1c;
+
+        --ok-soft:       rgba(5, 150, 105, 0.08);
+        --warn-soft:     rgba(180, 83, 9, 0.08);
+        --critical-soft: rgba(194, 65, 12, 0.08);
+        --danger-soft:   rgba(185, 28, 28, 0.08);
+
+        --grid-line: rgba(0, 0, 0, 0.04);
+      }
+    }
+
+    /* ====================================================================
+       RESET + BASE
+       ==================================================================== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      background: var(--bg-0);
+      color: var(--text-0);
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      min-height: 100vh;
+      background-image:
+        linear-gradient(to right,  var(--grid-line) 1px, transparent 1px),
+        linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+      background-size: 80px 80px;
+      background-position: center;
+      overflow-x: hidden;
+    }
+
+    .serif {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      color: var(--serif-color);
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .mono {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-variant-numeric: tabular-nums;
+    }
+
+    ::selection {
+      background: var(--text-0);
+      color: var(--bg-0);
+    }
+
+    /* ====================================================================
+       HERO BANNER (steel import image)
+       ==================================================================== */
+    .hero-banner {
+      position: relative;
+      width: 100%;
+      height: clamp(220px, 30vw, 360px);
+      overflow: hidden;
+      background: var(--bg-1);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=1800&q=80');
+      background-size: cover;
+      background-position: center;
+      filter: grayscale(0.25) contrast(1.08);
+      animation: heroZoom 24s ease-in-out infinite alternate;
+    }
+
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(10, 11, 15, 0) 0%,
+        rgba(10, 11, 15, 0.35) 55%,
+        var(--bg-0) 100%
+      );
+      pointer-events: none;
+    }
+
+    @media (prefers-color-scheme: light) {
+      .hero-banner::before {
+        filter: grayscale(0.15) contrast(1) brightness(0.92);
+      }
+      .hero-banner::after {
+        background: linear-gradient(
+          180deg,
+          rgba(250, 249, 245, 0) 0%,
+          rgba(250, 249, 245, 0.35) 55%,
+          var(--bg-0) 100%
+        );
+      }
+    }
+
+    @keyframes heroZoom {
+      0%   { transform: scale(1); }
+      100% { transform: scale(1.08); }
+    }
+
+    .hero-caption {
+      position: absolute;
+      left: 32px;
+      bottom: 20px;
+      z-index: 2;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: 600;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+    }
+
+    @media (max-width: 640px) {
+      .hero-caption { left: 20px; bottom: 16px; font-size: 9px; }
+    }
+
+    /* ====================================================================
+       LAYOUT
+       ==================================================================== */
+    .shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 40px 32px 96px;
+    }
+
+    @media (max-width: 640px) {
+      .shell { padding: 28px 20px 64px; }
+    }
+
+    /* ====================================================================
+       MASTHEAD
+       ==================================================================== */
+    .masthead {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 40px;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: 16px;
+    }
+
+    .brand-mark .pulse {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--ok);
+      box-shadow: 0 0 0 4px var(--ok-soft);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%      { opacity: 0.55; transform: scale(0.8); }
+    }
+
+    h1.headline {
+      font-size: clamp(40px, 6vw, 64px);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .tagline {
+      font-size: 14px;
+      color: var(--text-1);
+      margin-top: 14px;
+      max-width: 42ch;
+    }
+
+    .masthead-meta {
+      text-align: right;
+      font-size: 11px;
+      color: var(--text-2);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.8;
+    }
+
+    .masthead-meta .mono {
+      font-size: 12px;
+      color: var(--text-0);
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 500;
+    }
+
+    @media (max-width: 640px) {
+      .masthead { grid-template-columns: 1fr; align-items: start; }
+      .masthead-meta { text-align: left; }
+    }
+
+    /* ====================================================================
+       QUARTER PROGRESS STRIP
+       ==================================================================== */
+    .quarter-strip {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 48px;
+    }
+
+    .qs-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 14px;
+    }
+
+    .qs-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-2);
+      font-weight: 600;
+    }
+
+    .qs-days {
+      font-size: 12px;
+      color: var(--text-1);
+    }
+
+    .qs-days .accent {
+      color: var(--text-0);
+      font-weight: 600;
+    }
+
+    .qs-track {
+      position: relative;
+      height: 3px;
+      background: var(--line);
+      border-radius: 999px;
+      overflow: visible;
+    }
+
+    .qs-fill {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      background: var(--text-0);
+      border-radius: 999px;
+      width: 0;
+      transition: width 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+    }
+
+    .qs-marker {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 12px;
+      height: 12px;
+      background: var(--bg-0);
+      border: 2px solid var(--text-0);
+      border-radius: 50%;
+      opacity: 0;
+      transition: opacity 0.4s 1.8s, left 1.6s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+    }
+
+    .qs-range {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--text-2);
+    }
+
+    /* ====================================================================
+       STAT ROW (aggregates)
+       ==================================================================== */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+      border-radius: 0;
+      margin-bottom: 64px;
+    }
+
+    .stat-cell {
+      background: var(--bg-0);
+      padding: 20px 24px;
+      transition: background 0.3s;
+    }
+
+    .stat-cell:hover { background: var(--bg-1); }
+
+    .stat-cell .stat-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-2);
+      margin-bottom: 8px;
+    }
+
+    .stat-cell .stat-value {
+      font-size: 48px;
+      line-height: 1;
+      font-weight: 500;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      letter-spacing: 0;
+    }
+
+    .stat-cell.ok       .stat-value { color: var(--ok); }
+    .stat-cell.warn     .stat-value { color: var(--warn); }
+    .stat-cell.critical .stat-value { color: var(--critical); }
+    .stat-cell.danger   .stat-value { color: var(--danger); }
+
+    @media (max-width: 720px) {
+      .stat-row { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ====================================================================
+       SECTION TITLE
+       ==================================================================== */
+    .section-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 32px;
+    }
+
+    .section-title h2 {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-size: 36px;
+      line-height: 1;
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+
+    .section-title .section-caption {
+      font-size: 11px;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 600;
+    }
+
+    /* ====================================================================
+       CATEGORY ARTICLES (editorial rows)
+       ==================================================================== */
+    .articles {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .article {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 32px;
+      padding: 40px 0;
+      border-bottom: 1px solid var(--line);
+      opacity: 0;
+      transform: translateY(16px);
+      animation: riseIn 0.6s ease-out forwards;
+    }
+
+    .article:last-child { border-bottom: none; }
+
+    @keyframes riseIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .article-num {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-size: 48px;
+      line-height: 0.9;
+      color: var(--text-2);
+      letter-spacing: 0;
+      font-style: italic;
+    }
+
+    .article-body { min-width: 0; }
+
+    .article-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+
+    .article-name {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-size: 30px;
+      line-height: 1.1;
+      letter-spacing: 0;
+      font-weight: 400;
+    }
+
+    .tags {
+      display: inline-flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      padding: 4px 8px;
+      border-radius: 2px;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      border: 1px solid;
+    }
+
+    .tag-EMT     { color: var(--danger);   border-color: var(--danger);   background: var(--danger-soft); }
+    .tag-RIGID   { color: var(--critical); border-color: var(--critical); background: var(--critical-soft); }
+    .tag-STRUT   { color: #a855f7;         border-color: rgba(168, 85, 247, 0.5); background: rgba(168, 85, 247, 0.08); }
+    .tag-SUPPORT { color: #3b82f6;         border-color: rgba(59, 130, 246, 0.5); background: rgba(59, 130, 246, 0.08); }
+
+    /* Panels: Non-FTA vs FTA */
+    .panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+
+    .panel {
+      background: var(--surface);
+      padding: 24px;
+      position: relative;
+      transition: background 0.25s;
+    }
+
+    .panel:hover { background: var(--bg-1); }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .panel-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-2);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 3px 9px 3px 6px;
+      border-radius: 999px;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+
+    .status-pill::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+
+    .status-pill.healthy  { color: var(--ok);       background: var(--ok-soft); }
+    .status-pill.warning  { color: var(--warn);     background: var(--warn-soft); }
+    .status-pill.critical { color: var(--critical); background: var(--critical-soft); }
+    .status-pill.used-up  { color: var(--danger);   background: var(--danger-soft); }
+
+    .status-pill.healthy::before  { background: var(--ok); }
+    .status-pill.warning::before  { background: var(--warn); }
+    .status-pill.critical::before { background: var(--critical); }
+    .status-pill.used-up::before  { background: var(--danger); }
+
+    /* Hero number */
+    .hero-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .hero-pct {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-size: 60px;
+      line-height: 0.9;
+      letter-spacing: 0;
+      font-weight: 400;
+    }
+
+    .hero-pct .sym {
+      font-size: 0.55em;
+      color: var(--text-2);
+      margin-left: 2px;
+    }
+
+    .hero-pct.healthy  { color: var(--ok); }
+    .hero-pct.warning  { color: var(--warn); }
+    .hero-pct.critical { color: var(--critical); }
+    .hero-pct.used-up  { color: var(--danger); }
+
+    .pace-note {
+      font-size: 10px;
+      color: var(--text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      text-align: right;
+      line-height: 1.4;
+    }
+
+    .pace-note strong {
+      display: block;
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-size: 12px;
+      letter-spacing: 0;
+      text-transform: none;
+      color: var(--text-0);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    /* Stepped progress bar */
+    .stepped {
+      display: grid;
+      grid-template-columns: repeat(20, 1fr);
+      gap: 2px;
+      margin-bottom: 24px;
+      height: 12px;
+    }
+
+    .step {
+      background: var(--line);
+      border-radius: 1px;
+      opacity: 0;
+      transform: scaleY(0.4);
+      transform-origin: bottom;
+      transition: opacity 0.3s, transform 0.3s, background 0.3s;
+    }
+
+    .step.on { opacity: 1; transform: scaleY(1); }
+
+    .step.on.healthy  { background: var(--ok); }
+    .step.on.warning  { background: var(--warn); }
+    .step.on.critical { background: var(--critical); }
+    .step.on.used-up  { background: var(--danger); }
+
+    /* Panel KV grid */
+    .kv {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 24px;
+      padding-top: 16px;
+      border-top: 1px dashed var(--line-2);
+    }
+
+    .kv-item { display: flex; flex-direction: column; gap: 2px; }
+    .kv-item .k {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-2);
+      font-weight: 600;
+    }
+    .kv-item .v {
+      font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      font-size: 14px;
+      color: var(--text-0);
+      font-weight: 500;
+    }
+
+    @media (max-width: 640px) {
+      .panels { grid-template-columns: 1fr; }
+      .article { grid-template-columns: 1fr; gap: 12px; padding: 24px 0; }
+      .article-num { font-size: 32px; }
+      .article-name { font-size: 24px; }
+      .hero-pct { font-size: 44px; }
+    }
+
+    /* ====================================================================
+       COLOPHON
+       ==================================================================== */
+    .colophon {
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      font-size: 12px;
+      color: var(--text-2);
+    }
+
+    .colophon h4 {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-1);
+      margin-bottom: 10px;
+    }
+
+    .colophon a {
+      display: block;
+      color: var(--text-0);
+      text-decoration: none;
+      padding: 4px 0;
+      border-bottom: 1px solid var(--line);
+      transition: padding-left 0.2s, color 0.2s;
+    }
+
+    .colophon a:last-child { border-bottom: none; }
+
+    .colophon a:hover {
+      padding-left: 6px;
+      color: var(--accent);
+    }
+
+    .colophon a::before {
+      content: '→';
+      margin-right: 8px;
+      color: var(--text-2);
+    }
+
+    @media (max-width: 640px) {
+      .colophon { grid-template-columns: 1fr; }
+    }
+
+    /* ====================================================================
+       LOADING + ERROR
+       ==================================================================== */
+    .state {
+      padding: 80px 0;
+      text-align: center;
+      color: var(--text-2);
+      font-size: 13px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .state.error {
+      color: var(--danger);
+      padding: 40px;
+      border: 1px solid var(--danger);
+      background: var(--danger-soft);
+    }
+
+    .spinner {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--text-0);
+      margin-right: 10px;
+      animation: blink 1.2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.2; }
+      50%      { opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================== Hero banner ================== -->
+  <div class="hero-banner" role="img" aria-label="Steel pipes in industrial storage">
+    <div class="hero-caption">Canadian Steel Imports · Tariff Rate Quota System</div>
+  </div>
+
+  <main class="shell">
+
+    <!-- ================== Masthead ================== -->
+    <header class="masthead">
+      <div>
+        <div class="brand-mark"><span class="pulse"></span> TRQ Monitor · Live</div>
+        <h1 class="headline serif">Canadian Steel Quota</h1>
+        <p class="tagline">Daily utilization snapshot of federal Tariff Rate Quotas for Standard Pipe and Line Pipe — the categories relevant to our EMT and Rigid Conduit business.</p>
+      </div>
+      <div class="masthead-meta">
+        <div>Quarter</div>
+        <div class="mono" id="m-quarter">—</div>
+        <div style="margin-top: 10px">Updated</div>
+        <div class="mono" id="m-updated">—</div>
+      </div>
+    </header>
+
+    <!-- ================== Quarter Progress Strip ================== -->
+    <section class="quarter-strip">
+      <div class="qs-head">
+        <div class="qs-label">Quarter progress</div>
+        <div class="qs-days" id="qs-days">—</div>
+      </div>
+      <div class="qs-track">
+        <div class="qs-fill" id="qs-fill"></div>
+        <div class="qs-marker" id="qs-marker"></div>
+      </div>
+      <div class="qs-range">
+        <span id="qs-start">—</span>
+        <span id="qs-end">—</span>
+      </div>
+    </section>
+
+    <!-- ================== Content slot ================== -->
+    <div id="content">
+      <div class="state"><span class="spinner"></span>Loading quota data</div>
+    </div>
+
+  </main>
+
+  <script>
+    // ====================================================================
+    // STATUS → CSS CLASS
+    // ====================================================================
+    const statusClass = {
+      'Healthy':  'healthy',
+      'Warning':  'warning',
+      'Critical': 'critical',
+      'Used Up':  'used-up',
+    };
+
+    const padNum = n => String(n).padStart(2, '0');
+
+    // ====================================================================
+    // FORMATTERS
+    // ====================================================================
+    function fmtKg(n) {
+      if (n === 0) return '0';
+      if (n >= 1_000_000) return (n / 1_000_000).toFixed(2) + ' M';
+      if (n >= 1_000)     return (n / 1_000).toFixed(1)     + ' K';
+      return String(n);
+    }
+
+    function fmtDate(iso) {
+      if (!iso) return '—';
+      const d = new Date(iso + 'T00:00:00');
+      return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function daysBetween(a, b) {
+      const ms = (new Date(b + 'T00:00:00')) - (new Date(a + 'T00:00:00'));
+      return Math.round(ms / 86400000);
+    }
+
+    // ====================================================================
+    // MAIN
+    // ====================================================================
+    async function load() {
+      const slot = document.getElementById('content');
+      try {
+        const resp = await fetch('data.json?t=' + Date.now(), { cache: 'no-store' });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        render(await resp.json());
+      } catch (e) {
+        slot.innerHTML = `<div class="state error">Failed to load · ${e.message}</div>`;
+      }
+    }
+
+    function render(data) {
+      // Masthead
+      document.getElementById('m-quarter').textContent = `${data.quarter} 2026`;
+      document.getElementById('m-updated').textContent = fmtDate(data.generated_at);
+
+      // Quarter progress
+      const [qStart, qEnd] = data.quarter_window.split(' to ');
+      const totalDays = daysBetween(qStart, qEnd);
+      const elapsed   = daysBetween(qStart, data.generated_at);
+      const pct       = Math.max(0, Math.min(100, (elapsed / totalDays) * 100));
+
+      document.getElementById('qs-start').textContent = fmtDate(qStart);
+      document.getElementById('qs-end').textContent   = fmtDate(qEnd);
+      document.getElementById('qs-days').innerHTML =
+        `<span class="accent">Day ${elapsed}</span> of ${totalDays} · ${pct.toFixed(0)}% elapsed`;
+
+      requestAnimationFrame(() => {
+        document.getElementById('qs-fill').style.width = pct + '%';
+        const marker = document.getElementById('qs-marker');
+        marker.style.left = pct + '%';
+        marker.style.opacity = 1;
+      });
+
+      // Aggregate counts across all 12 country-group slots
+      const counts = { 'Healthy': 0, 'Warning': 0, 'Critical': 0, 'Used Up': 0 };
+      for (const c of data.focus_categories) {
+        counts[c.non_fta.status]++;
+        counts[c.fta.status]++;
+      }
+
+      const stats = `
+        <div class="stat-row">
+          <div class="stat-cell danger">
+            <div class="stat-label">Used Up</div>
+            <div class="stat-value">${counts['Used Up']}</div>
+          </div>
+          <div class="stat-cell critical">
+            <div class="stat-label">Critical</div>
+            <div class="stat-value">${counts['Critical']}</div>
+          </div>
+          <div class="stat-cell warn">
+            <div class="stat-label">Warning</div>
+            <div class="stat-value">${counts['Warning']}</div>
+          </div>
+          <div class="stat-cell ok">
+            <div class="stat-label">Healthy</div>
+            <div class="stat-value">${counts['Healthy']}</div>
+          </div>
+        </div>
+      `;
+
+      const sectionTitle = `
+        <div class="section-title">
+          <h2>Focus Categories</h2>
+          <div class="section-caption">${data.focus_categories.length} tracked · sorted by saturation</div>
+        </div>
+      `;
+
+      // Articles (categories)
+      const articles = data.focus_categories.map((c, i) => `
+        <article class="article" style="animation-delay: ${i * 70}ms">
+          <div class="article-num">${padNum(i + 1)}</div>
+          <div class="article-body">
+            <div class="article-header">
+              <h3 class="article-name">${c.name}</h3>
+              <div class="tags">
+                ${c.tags.map(t => `<span class="tag tag-${t}">${t}</span>`).join('')}
+              </div>
+            </div>
+            <div class="panels">
+              ${renderPanel('Non-FTA', c.non_fta, pct)}
+              ${renderPanel('FTA',     c.fta, pct)}
+            </div>
+          </div>
+        </article>
+      `).join('');
+
+      const colophon = `
+        <section class="colophon">
+          <div>
+            <h4>Data Source</h4>
+            <a href="${data.source_urls.nfta}" target="_blank" rel="noopener">Non-FTA quarterly CSV</a>
+            <a href="${data.source_urls.fta}"  target="_blank" rel="noopener">FTA quarterly CSV</a>
+          </div>
+          <div>
+            <h4>Repository</h4>
+            <a href="https://github.com/scotpenn/trq-notion-monitor" target="_blank" rel="noopener">Source repository</a>
+          </div>
+        </section>
+      `;
+
+      document.getElementById('content').innerHTML =
+        stats + sectionTitle + `<div class="articles">${articles}</div>` + colophon;
+
+      // Animate stepped progress bars after layout
+      requestAnimationFrame(() => {
+        document.querySelectorAll('.stepped').forEach(el => {
+          const steps = el.querySelectorAll('.step');
+          const target = parseFloat(el.dataset.pct);
+          const cls = el.dataset.status;
+          steps.forEach((step, idx) => {
+            const threshold = (idx + 1) * 5;  // 20 steps × 5% each
+            if (threshold <= target + 0.5) {
+              setTimeout(() => {
+                step.classList.add('on', cls);
+              }, 40 * idx + 300);
+            }
+          });
+        });
+      });
+    }
+
+    function renderPanel(label, g, quarterPct) {
+      const cls = statusClass[g.status] || 'healthy';
+      const pctCapped = Math.min(g.utilization_pct, 100);
+
+      // Pace: how does utilization compare to quarter elapsed?
+      const pace = g.utilization_pct - quarterPct;
+      const paceTxt = pace >= 5  ? `+${pace.toFixed(0)} pts over pace`
+                    : pace <= -5 ? `${pace.toFixed(0)} pts under pace`
+                    : `on pace`;
+
+      return `
+        <div class="panel">
+          <div class="panel-head">
+            <span class="panel-label">${label}</span>
+            <span class="status-pill ${cls}">${g.status}</span>
+          </div>
+          <div class="hero-row">
+            <div class="hero-pct ${cls}">${g.utilization_pct.toFixed(1)}<span class="sym">%</span></div>
+            <div class="pace-note">
+              vs quarter
+              <strong>${paceTxt}</strong>
+            </div>
+          </div>
+          <div class="stepped" data-pct="${pctCapped}" data-status="${cls}">
+            ${Array.from({length: 20}).map(() => '<div class="step"></div>').join('')}
+          </div>
+          <div class="kv">
+            <div class="kv-item">
+              <span class="k">Used</span>
+              <span class="v">${fmtKg(g.utilized_kg)} kg</span>
+            </div>
+            <div class="kv-item">
+              <span class="k">Remaining</span>
+              <span class="v">${fmtKg(g.remaining_kg)} kg</span>
+            </div>
+            <div class="kv-item">
+              <span class="k">Max Quota</span>
+              <span class="v">${fmtKg(g.max_quota_kg)} kg</span>
+            </div>
+            <div class="kv-item">
+              <span class="k">Country Cap</span>
+              <span class="v">${g.max_country_share_pct}%</span>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    load();
+  </script>
+</body>
+</html>
