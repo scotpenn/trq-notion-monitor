@@ -1,0 +1,46 @@
+name: Daily TRQ Sync
+
+# ---------------------------------------------------------------------
+# 每天北京时间 21:00（多伦多 9:00 AM EDT = 13:00 UTC）触发一次
+# Global Affairs Canada 大约在 9 AM GMT 之前就已更新 CSV，所以这个时间
+# 拉取时数据都是当天最新的。
+# 也可以在 GitHub Actions 页面手动 "Run workflow" 立即触发。
+# ---------------------------------------------------------------------
+
+on:
+  schedule:
+    - cron: "0 13 * * *"   # 每天 UTC 13:00 = 多伦多 9:00 AM EDT / 8:00 AM EST
+  workflow_dispatch: {}     # 允许在 Actions 页面手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write       # 需要把 data/*.csv 当日快照 commit 回 repo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Run sync script (live push to Notion)
+        env:
+          NOTION_TOKEN:          ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATA_SOURCE_ID: ${{ secrets.NOTION_DATA_SOURCE_ID }}
+        run: python sync_to_notion.py
+
+      - name: Commit today's CSV snapshots back to repo
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/*.csv
+          if git diff --staged --quiet; then
+            echo "ℹ️  No new snapshot files today"
+          else
+            git commit -m "Daily snapshot: $(date -u +%Y-%m-%d)"
+            git push
+          fi
