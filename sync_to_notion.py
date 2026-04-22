@@ -105,6 +105,9 @@ def download_csv(label: str, url: str) -> str:
     """
     下载一份 TRQ CSV，同时存档到 data/ 目录。
 
+    带重试逻辑：加拿大政府网站（eics-scei.gc.ca）偶尔超时，
+    单次失败不应该让整个 job 挂掉。默认最多尝试 3 次。
+
     Args:
         label: 数据源标签，如 "NFTA-Q4" / "FTA-Q4"（用来命名存档文件）
         url:   CSV 直链
@@ -113,16 +116,32 @@ def download_csv(label: str, url: str) -> str:
         str: CSV 文件的完整文本内容，交给下一步解析函数用
 
     Raises:
-        urllib.error.URLError: 网络请求失败
+        urllib.error.URLError: 连续 3 次都失败才抛
         UnicodeDecodeError:    编码尝试全失败时抛
     """
     print(f"[download] ⬇️  {label}: {url}")
 
-    # --- 发请求 ---
+    # --- 发请求（带重试：政府网站偶尔超时） ---
     req = urllib.request.Request(url, headers={"User-Agent": "TRQ-Sync/1.0"})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        last_modified = resp.headers.get("Last-Modified", "(无)")
-        raw_bytes = resp.read()
+    max_retries = 3
+    backoff_seconds = [15, 45]  # 第 1 次失败睡 15s，第 2 次失败睡 45s
+
+    last_modified = "(无)"
+    raw_bytes = None
+    for attempt in range(1, max_retries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=60) as resp:
+                last_modified = resp.headers.get("Last-Modified", "(无)")
+                raw_bytes = resp.read()
+            break  # 拿到数据，跳出重试循环
+        except Exception as e:
+            if attempt >= max_retries:
+                print(f"           ❌ all {max_retries} attempts failed: {type(e).__name__}: {e}")
+                raise
+            wait = backoff_seconds[attempt - 1]
+            print(f"           ⚠️  attempt {attempt}/{max_retries} failed: {type(e).__name__}: {e}")
+            print(f"              retrying in {wait}s...")
+            time.sleep(wait)
 
     # --- 存档：原始 CSV 当日快照 ---
     # GitHub Actions 之后会把 data/ 里新增的文件 commit 回 repo
