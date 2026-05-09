@@ -1,32 +1,8 @@
 {
-  "generated_at": "2026-05-08",
+  "generated_at": "2026-05-09",
   "quarter": "Q4",
   "quarter_window": "2026-03-26 to 2026-06-27",
   "focus_categories": [
-    {
-      "name": "Standard Pipe",
-      "category_id": 20,
-      "tags": [
-        "EMT",
-        "RIGID"
-      ],
-      "non_fta": {
-        "utilization_pct": 99.27,
-        "max_quota_kg": 10369200,
-        "utilized_kg": 10293735,
-        "remaining_kg": 75465,
-        "max_country_share_pct": 21.0,
-        "status": "Critical"
-      },
-      "fta": {
-        "utilization_pct": 99.86,
-        "max_quota_kg": 13489500,
-        "utilized_kg": 13470482,
-        "remaining_kg": 19018,
-        "max_country_share_pct": 58.0,
-        "status": "Critical"
-      }
-    },
     {
       "name": "Line Pipe",
       "category_id": 18,
@@ -47,6 +23,30 @@
         "utilized_kg": 6238019,
         "remaining_kg": 10581,
         "max_country_share_pct": 45.0,
+        "status": "Critical"
+      }
+    },
+    {
+      "name": "Standard Pipe",
+      "category_id": 20,
+      "tags": [
+        "EMT",
+        "RIGID"
+      ],
+      "non_fta": {
+        "utilization_pct": 99.27,
+        "max_quota_kg": 10369200,
+        "utilized_kg": 10293735,
+        "remaining_kg": 75465,
+        "max_country_share_pct": 21.0,
+        "status": "Critical"
+      },
+      "fta": {
+        "utilization_pct": 99.69,
+        "max_quota_kg": 13489500,
+        "utilized_kg": 13447888,
+        "remaining_kg": 41612,
+        "max_country_share_pct": 58.0,
         "status": "Critical"
       }
     }
