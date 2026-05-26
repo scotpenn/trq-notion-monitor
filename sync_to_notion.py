@@ -492,8 +492,8 @@ def _post_one(payload: dict, token: str, max_retries: int = 3) -> dict:
             print(f"         ⏳ HTTP {e.code}，{wait}s 后重试 ({attempt}/{max_retries})")
             time.sleep(wait)
 
-        except urllib.error.URLError as e:
-            # DNS 失败、连接被拒等网络问题，可重试
+        except (urllib.error.URLError, TimeoutError) as e:
+            # DNS 失败、连接被拒、读取超时等网络问题，可重试
             wait = 2 ** attempt
             print(f"         ⏳ 网络错误 {e}，{wait}s 后重试 ({attempt}/{max_retries})")
             time.sleep(wait)
