@@ -1,31 +1,8 @@
 {
-  "generated_at": "2026-06-19",
+  "generated_at": "2026-06-20",
   "quarter": "Q4",
   "quarter_window": "2026-03-26 to 2026-06-27",
   "focus_categories": [
-    {
-      "name": "Line Pipe",
-      "category_id": 18,
-      "tags": [
-        "RIGID"
-      ],
-      "non_fta": {
-        "utilization_pct": 76.09,
-        "max_quota_kg": 2472000,
-        "utilized_kg": 1880985,
-        "remaining_kg": 591015,
-        "max_country_share_pct": 59.0,
-        "status": "Warning"
-      },
-      "fta": {
-        "utilization_pct": 99.83,
-        "max_quota_kg": 6248600,
-        "utilized_kg": 6238019,
-        "remaining_kg": 10581,
-        "max_country_share_pct": 45.0,
-        "status": "Critical"
-      }
-    },
     {
       "name": "Standard Pipe",
       "category_id": 20,
@@ -47,6 +24,29 @@
         "utilized_kg": 13447888,
         "remaining_kg": 41612,
         "max_country_share_pct": 58.0,
+        "status": "Critical"
+      }
+    },
+    {
+      "name": "Line Pipe",
+      "category_id": 18,
+      "tags": [
+        "RIGID"
+      ],
+      "non_fta": {
+        "utilization_pct": 76.09,
+        "max_quota_kg": 2472000,
+        "utilized_kg": 1880985,
+        "remaining_kg": 591015,
+        "max_country_share_pct": 59.0,
+        "status": "Warning"
+      },
+      "fta": {
+        "utilization_pct": 96.77,
+        "max_quota_kg": 6248600,
+        "utilized_kg": 6046944,
+        "remaining_kg": 201656,
+        "max_country_share_pct": 45.0,
         "status": "Critical"
       }
     }
