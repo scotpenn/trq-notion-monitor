@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-17",
+  "generated_at": "2026-07-18",
   "quarter": "Q4",
   "quarter_window": "2026-03-26 to 2026-06-27",
   "focus_categories": [
@@ -19,12 +19,12 @@
         "status": "Used Up"
       },
       "fta": {
-        "utilization_pct": 99.69,
+        "utilization_pct": 100.0,
         "max_quota_kg": 13489500,
-        "utilized_kg": 13447888,
-        "remaining_kg": 41612,
+        "utilized_kg": 13489206,
+        "remaining_kg": 294,
         "max_country_share_pct": 58.0,
-        "status": "Critical"
+        "status": "Used Up"
       }
     },
     {
