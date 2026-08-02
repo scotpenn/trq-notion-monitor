@@ -1,0 +1,78 @@
+Textbox137,Textbox143,Textbox155,Textbox156,Textbox146,Textbox147,Textbox148,Textbox149,Textbox150,Textbox151,Textbox152,Textbox153,Textbox154,Textbox157,Textbox158,Textbox159,Textbox160,Textbox161,Textbox162,Textbox163,Textbox164,Textbox165,Textbox166,Textbox167
+Free Trade Agreement Partners: Total Quarterly Volumes and Utilization per TRQ,1. Carbon Steel Ingots: Quarterly Utilization per Country – Maximum share for any single country is 77%,2. Steel Billets and Blooms: Quarterly Utilization per Country – Maximum share for any single country is 40%,3. Hot-Rolled Sheet: Quarterly Utilization per Country – Maximum share for any single country is 67%,4. Floor Plate: Quarterly Utilization per Country – Maximum share for any single country is 66%,5. Steel Plate: Quarterly Utilization per Country – Maximum share for any single country is 30%,6. Cold-Rolled Sheet: Quarterly Utilization per Country – Maximum share for any single country is 32%,7. Tin: Quarterly Utilization per Country – Maximum share for any single country is 56%,8. Coated Steel Sheet: Quarterly Utilization per Country – Maximum share for any single country is 25%,9. Pre-Painted: Quarterly Utilization per Country – Maximum share for any single country is 90%,10. Rebar: Quarterly Utilization per Country – Maximum share for any single country is 45%,11. Hot-Rolled Bar: Quarterly Utilization per Country – Maximum share for any single country is 58%,12. Wire Rod: Quarterly Utilization per Country – Maximum share for any single country is 59%,13. Cold Finished Bars: Quarterly Utilization per Country – Maximum share for any single country is 39%,14. Structural Steel: Quarterly Utilization per Country – Maximum share for any single country is 69%,15. Steel Wire: Quarterly Utilization per Country – Maximum share for any single country is 24%,16. Stainless Steel Ingots: Quarterly Utilization per Country – Maximum share for any single country is 83%,17. Stainless Steel Billets and Blooms: Quarterly Utilization per Country – Maximum share for any single country is 57%,18. Line Pipe: Quarterly Utilization per Country – Maximum share for any single country is 45%,19. Oil Country Tubular Goods: Quarterly Utilization per Country – Maximum share for any single country is 86%,20. Standard Pipe: Quarterly Utilization per Country – Maximum share for any single country is 58%,21. Large Diameter Line Pipe: Quarterly Utilization per Country – Maximum share for any single country is 76%,22. Piling Pipe: Quarterly Utilization per Country – Maximum share for any single country is 77%,23. Hollow Structural Sections: Quarterly Utilization per Country – Maximum share for any single country is 41%
+
+Textboxb6db942229da46bd872d39356f1404bb,Textbox0874cee6ce8b4c488f07adddedeb99e0,Textbox38,Textbox6defe02f6a5b4da79422566035a32381,Textbox8183768284fd4c8a9fecbd60b0f055be,Textboxecf89731bdd942ec8daa85d7b51cbfd4,Textbox18,CONTROL_ITEMS_Level_1_Commodity_Code,CONTROL_ITEMS_Level_1_Ceiling_Level,ID23_Products_Quota_Country_Ceiling___,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_CONTROL_ITEMS_FACT_Utilized,CONTROL_ITEMS_Quota_Remaining
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),1,Carbon Steel Ingots,"92,400",77%,0,0.00%,"92,400"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),2,Steel Billets and Blooms,"17,649,400",40%,0,0.00%,"17,649,400"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),3,Hot-Rolled Sheet,"9,523,100",67%,0,0.00%,"9,523,100"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),4,Floor Plate,"33,400",66%,0,0.00%,"33,400"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),5,Steel Plate,"54,354,900",30%,0,0.00%,"54,354,900"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),6,Cold-Rolled Sheet,"1,832,600",32%,0,0.00%,"1,832,600"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),7,Tin,"2,156,400",56%,0,0.00%,"2,156,400"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),8,Coated Steel Sheet,"31,128,200",25%,"215,274",0.69%,"30,912,926"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),9,Pre-Painted,"23,763,800",90%,0,0.00%,"23,763,800"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),10,Rebar,"28,710,400",45%,0,0.00%,"28,710,400"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),11,Hot-Rolled Bar,"8,750,300",58%,0,0.00%,"8,750,300"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),12,Wire Rod,"16,514,800",59%,0,0.00%,"16,514,800"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),13,Cold Finished Bars,"6,559,300",39%,"87,019",1.33%,"6,472,281"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),14,Structural Steel,"3,467,600",69%,0,0.00%,"3,467,600"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),15,Steel Wire,"7,370,100",24%,309,0.00%,"7,369,791"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),16,Stainless Steel Ingots,"1,100",83%,0,0.00%,"1,100"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),17,Stainless Steel Billets and Blooms,"5,800",57%,0,0.00%,"5,800"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),18,Line Pipe,"6,248,600",45%,0,0.00%,"6,248,600"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),19,Oil Country Tubular Goods,"9,800,800",86%,0,0.00%,"9,800,800"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),20,Standard Pipe,"13,489,500",58%,0,0.00%,"13,489,500"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),21,Large Diameter Line Pipe,"10,693,500",76%,0,0.00%,"10,693,500"
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),22,Piling Pipe,800,77%,0,0.00%,800
+Product Category,Maximum quota (KGM),Maximum country share (%),Current utilization (KGM),Current utilization (%),Remaining quota (KGM),23,Hollow Structural Sections,"2,776,900",41%,0,0.00%,"2,776,900"
+
+Textboxb6db942229da46bd872d39356f1404bb2,Textbox6defe02f6a5b4da79422566035a32382,Textbox8183768284fd4c8a9fecbd60b0f055be2,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_21,Textbox7,Textbox24
+
+Textboxb6db942229da46bd872d39356f1404bb3,Textbox6defe02f6a5b4da79422566035a32383,Textbox8183768284fd4c8a9fecbd60b0f055be3,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_11,Textbox125,Textbox87
+
+Textboxb6db942229da46bd872d39356f1404bb4,Textbox6defe02f6a5b4da79422566035a32384,Textbox8183768284fd4c8a9fecbd60b0f055be4,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_CONTROL_ITEMS_FACT_Utilized,Textbox8,Textbox89
+
+Textboxb6db942229da46bd872d39356f1404bb5,Textbox6defe02f6a5b4da79422566035a32385,Textbox8183768284fd4c8a9fecbd60b0f055be5,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_1,Textbox103,Textbox106
+
+Textboxb6db942229da46bd872d39356f1404bb6,Textbox6defe02f6a5b4da79422566035a32386,Textbox8183768284fd4c8a9fecbd60b0f055be6,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_4,Textbox130,Textbox131
+
+Textboxb6db942229da46bd872d39356f1404bb7,Textbox6defe02f6a5b4da79422566035a32387,Textbox8183768284fd4c8a9fecbd60b0f055be7,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_2,Textbox9,Textbox91
+
+Textboxb6db942229da46bd872d39356f1404bb8,Textbox6defe02f6a5b4da79422566035a32388,Textbox8183768284fd4c8a9fecbd60b0f055be8,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_CONTROL_ITEMS_FACT_Utilized,Textbox10,Textbox31
+
+Textboxb6db942229da46bd872d39356f1404bb9,Textbox6defe02f6a5b4da79422566035a32389,Textbox8183768284fd4c8a9fecbd60b0f055be9,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_CONTROL_ITEMS_FACT_Utilized,Textbox11,Textbox61
+Country,Current utilization (KGM),Share of total utilization (%),Sweden,494,0.00%,"215,274",0.69%
+Country,Current utilization (KGM),Share of total utilization (%),United Kingdom,"214,780",0.69%,"215,274",0.69%
+
+Textboxb6db942229da46bd872d39356f1404bb10,Textbox6defe02f6a5b4da79422566035a32390,Textbox8183768284fd4c8a9fecbd60b0f055be10,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_10,Textbox13,Textbox65
+
+Textboxb6db942229da46bd872d39356f1404bb11,Textbox6defe02f6a5b4da79422566035a32391,Textbox8183768284fd4c8a9fecbd60b0f055be11,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_3,Textbox15,Textbox94
+
+Textboxb6db942229da46bd872d39356f1404bb12,Textbox6defe02f6a5b4da79422566035a32392,Textbox8183768284fd4c8a9fecbd60b0f055be12,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_9,Textbox46,Textbox92
+
+Textboxb6db942229da46bd872d39356f1404bb13,Textbox6defe02f6a5b4da79422566035a32393,Textbox8183768284fd4c8a9fecbd60b0f055be13,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_5,Textbox64,Textbox98
+
+Textboxb6db942229da46bd872d39356f1404bb14,Textbox6defe02f6a5b4da79422566035a32394,Textbox8183768284fd4c8a9fecbd60b0f055be14,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_CONTROL_ITEMS_FACT_Utilized,Textbox66,Textbox101
+Country,Current utilization (KGM),Share of total utilization (%),Sweden,"87,019",1.33%,"87,019",1.33%
+
+Textboxb6db942229da46bd872d39356f1404bb15,Textbox6defe02f6a5b4da79422566035a32395,Textbox8183768284fd4c8a9fecbd60b0f055be15,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_13,Textbox67,Textbox107
+
+Textboxb6db942229da46bd872d39356f1404bb32,Textbox6defe02f6a5b4da79422566035a32412,Textbox8183768284fd4c8a9fecbd60b0f055be32,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_CONTROL_ITEMS_FACT_Utilized,Textbox69,Textbox110
+Country,Current utilization (KGM),Share of total utilization (%),Italy,309,0.00%,309,0.00%
+
+Textboxb6db942229da46bd872d39356f1404bb31,Textbox6defe02f6a5b4da79422566035a32411,Textbox8183768284fd4c8a9fecbd60b0f055be31,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_14,Textbox71,Textbox111
+
+Textboxb6db942229da46bd872d39356f1404bb30,Textbox6defe02f6a5b4da79422566035a32410,Textbox8183768284fd4c8a9fecbd60b0f055be30,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_6,Textbox73,Textbox113
+
+Textboxb6db942229da46bd872d39356f1404bb29,Textbox6defe02f6a5b4da79422566035a32409,Textbox8183768284fd4c8a9fecbd60b0f055be29,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_CONTROL_ITEMS_FACT_Utilized,Textbox75,Textbox114
+
+Textboxb6db942229da46bd872d39356f1404bb28,Textbox6defe02f6a5b4da79422566035a32408,Textbox8183768284fd4c8a9fecbd60b0f055be28,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_15,Textbox77,Textbox115
+
+Textboxb6db942229da46bd872d39356f1404bb27,Textbox6defe02f6a5b4da79422566035a32407,Textbox8183768284fd4c8a9fecbd60b0f055be27,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_7,Textbox79,Textbox118
+
+Textboxb6db942229da46bd872d39356f1404bb26,Textbox6defe02f6a5b4da79422566035a32406,Textbox8183768284fd4c8a9fecbd60b0f055be26,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_CONTROL_ITEMS_FACT_Utilized,Textbox81,Textbox119
+
+Textboxb6db942229da46bd872d39356f1404bb24,Textbox6defe02f6a5b4da79422566035a32404,Textbox8183768284fd4c8a9fecbd60b0f055be24,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_CONTROL_ITEMS_FACT_Utilized,Textbox83,Textbox121
+
+Textboxb6db942229da46bd872d39356f1404bb25,Textbox6defe02f6a5b4da79422566035a32405,Textbox8183768284fd4c8a9fecbd60b0f055be25,CONTROL_ITEMS_Level_1_Commodity_Code,ID_PERMIT_ITEM_FACT_Permit_Quantity,ID_v__Utilized_Country_8,Textbox85,Textbox122
+

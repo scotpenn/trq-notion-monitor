@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-01",
+  "generated_at": "2026-08-02",
   "quarter": "Q4",
   "quarter_window": "2026-03-26 to 2026-06-27",
   "focus_categories": [
@@ -11,20 +11,20 @@
         "RIGID"
       ],
       "non_fta": {
-        "utilization_pct": 100.0,
+        "utilization_pct": 0.0,
         "max_quota_kg": 10369200,
-        "utilized_kg": 10369200,
-        "remaining_kg": 0,
+        "utilized_kg": 0,
+        "remaining_kg": 10369200,
         "max_country_share_pct": 21.0,
-        "status": "Used Up"
+        "status": "Healthy"
       },
       "fta": {
-        "utilization_pct": 100.0,
+        "utilization_pct": 0.0,
         "max_quota_kg": 13489500,
-        "utilized_kg": 13489206,
-        "remaining_kg": 294,
+        "utilized_kg": 0,
+        "remaining_kg": 13489500,
         "max_country_share_pct": 58.0,
-        "status": "Used Up"
+        "status": "Healthy"
       }
     },
     {
@@ -34,20 +34,20 @@
         "RIGID"
       ],
       "non_fta": {
-        "utilization_pct": 76.09,
+        "utilization_pct": 0.0,
         "max_quota_kg": 2472000,
-        "utilized_kg": 1880985,
-        "remaining_kg": 591015,
+        "utilized_kg": 0,
+        "remaining_kg": 2472000,
         "max_country_share_pct": 59.0,
-        "status": "Warning"
+        "status": "Healthy"
       },
       "fta": {
-        "utilization_pct": 96.77,
+        "utilization_pct": 0.0,
         "max_quota_kg": 6248600,
-        "utilized_kg": 6046944,
-        "remaining_kg": 201656,
+        "utilized_kg": 0,
+        "remaining_kg": 6248600,
         "max_country_share_pct": 45.0,
-        "status": "Critical"
+        "status": "Healthy"
       }
     }
   ],
