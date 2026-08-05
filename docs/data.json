@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-04",
+  "generated_at": "2026-08-05",
   "quarter": "Q4",
   "quarter_window": "2026-03-26 to 2026-06-27",
   "focus_categories": [
@@ -44,8 +44,8 @@
       "fta": {
         "utilization_pct": 96.77,
         "max_quota_kg": 6248600,
-        "utilized_kg": 6046944,
-        "remaining_kg": 201656,
+        "utilized_kg": 6046945,
+        "remaining_kg": 201655,
         "max_country_share_pct": 45.0,
         "status": "Critical"
       }
